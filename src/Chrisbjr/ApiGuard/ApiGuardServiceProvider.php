@@ -18,11 +18,19 @@ class ApiGuardServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		$this->package('chrisbjr/api-guard');
+		// Publish config
+		$this->publishes([
+			__DIR__ . '/../../config/config.php' => config_path('apiguard.php')
+		], 'config');
+
+		// Publish migrations
+		$this->publishes([
+			__DIR__ . '/../../migrations' => base_path('/database/migrations')
+		], 'migrations');
 
         $this->app->register('EllipseSynergie\ApiResponse\Laravel\ResponseServiceProvider');
 
-        require_once __DIR__.'/../../routes.php';
+        require_once __DIR__ . '/../../routes.php';
 	}
 
 	/**

@@ -15,11 +15,15 @@ I've been looking for an equivalent for Laravel but did not find any so this is 
 
 ### Required setup
 
-NOTE: Currently, ApiGuard will only work for Laravel 4.2.*.
-
 In the `require` key of `composer.json` file add the following
 
+Laravel 4:
+
     "chrisbjr/api-guard": "0.*"
+
+Laravel 5:
+
+    "chrisbjr/api-guard": "dev-l5"
 
 Run the Composer update comand
 
@@ -39,7 +43,14 @@ In your `config/app.php` add `'Chrisbjr\ApiGuard\ApiGuardServiceProvider'` to th
 
 Now generate the api-guard migration (make sure you have your database configuration set up correctly):
 
+Laravel 4:
+
     $ php artisan migrate --package="chrisbjr/api-guard"
+
+Laravel 5:
+
+    $ php artisan vendor:publish --tag=migrations
+    $ php artisan migrate
 
 It will setup two tables - api_keys and api_logs.
 
@@ -83,9 +94,15 @@ Now, to prevent others from generating API keys through the route above, you can
 
 To create your own configuration file for ApiGuard, run the following command:
 
+Laravel 4:
+
     $ php artisan config:publish chrisbjr/api-guard
 
-The configuration file will be found in `app/config/packages/chrisbjr/api-guard/config.php`. Open this file and change the `generateApiKeyRoute` variable to `false`
+Laravel 5:
+
+    $ php artisan vendor:publish --tag=config
+
+The configuration file will be found in `app/config/packages/chrisbjr/api-guard/config.php` (or `app/config/apiguard.php` for Laravel 5). Open this file and change the `generateApiKeyRoute` variable to `false`
 
     'generateApiKeyRoute' => false
 
